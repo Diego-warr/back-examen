@@ -85,7 +85,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<?> createUser(@RequestBody User u)
+	public ResponseEntity<?> createUser(@RequestBody User u,Principal principal)
 	{
 		var userOp = uService.findByEmail(u.getEmail());
 		
@@ -100,7 +100,13 @@ public class UserController {
 			u.setStatus("A");
 			var user = uService.createOrUpdate(u);
 
-			simpMessagingTemplate.convertAndSend("/topic/greetings",user);
+			//simpMessagingTemplate.convertAndSend("/topic/greetings",user);
+			OutputMessage out = new OutputMessage(
+					"user",
+					"hola",
+					new SimpleDateFormat("HH:mm").format(new Date()));
+
+			//simpMessagingTemplate.convertAndSendToUser(principal.getName(), "queue/notification", out);
 			
 			return ResponseEntity.ok(new ResponseData(user,"OK","v1.0.0"));
 		}

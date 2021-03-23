@@ -15,14 +15,21 @@ public class WebSocketConfig  implements WebSocketMessageBrokerConfigurer {
         //registry.enableSimpleBroker("/topic");
         //registry.setApplicationDestinationPrefixes("/app");
 
-        registry.enableSimpleBroker("/secured/user/queue/specific-user");
-        registry.setApplicationDestinationPrefixes("/spring-security-mvc-socket");
-        registry.setUserDestinationPrefix("/secured/user");
+        //registry.enableSimpleBroker("/secured/user/queue/specific-user");
+        //registry.setApplicationDestinationPrefixes("/spring-security-mvc-socket");
+        //registry.setUserDestinationPrefix("/secured/user");
+        registry.enableSimpleBroker("/topic", "/queue");
+        registry.setApplicationDestinationPrefixes("/app");
+
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         //registry.addEndpoint("ws/").setAllowedOrigins("http://localhost:8686").withSockJS();
-        registry.addEndpoint("/secured/room").withSockJS();
+        //registry.addEndpoint("/secured/room").withSockJS();
+
+        registry.addEndpoint("/socket")
+                .setAllowedOrigins("*")
+                .withSockJS();
     }
 }

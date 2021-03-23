@@ -1,4 +1,4 @@
-var socket = new SockJS('/secured/room');
+var socket = new SockJS('api/socket');
 var stompClient = Stomp.over(socket);
 var sessionId = "";
 
@@ -13,7 +13,7 @@ stompClient.connect({}, function (frame) {
     sessionId = url;
 });
 
-stompClient.subscribe('secured/user/queue/specific-user'
+stompClient.subscribe('/user/queue/notification'
     + '-user' + this.sessionId, function (msgOut) {
    console.log(msgOut);
 });
